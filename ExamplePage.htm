@@ -1,0 +1,176 @@
+<!--Jeremiah S Kleiber 9/27/20 jsk84@zips.uakron.edu-->
+<!--This page has a factorial calculator, image that follows cursor and a video-->
+<!DOCTYPE html>
+<html>
+<head>
+
+<title>Assignment 1</title>
+
+</head>
+
+<body>
+
+
+<!--displays browser, date and time-->
+<p id="browser"> </p>
+<p id="browserName"> </p>
+<div id = "dateTime">
+<span id="date"></span>
+<span id="time"></span>
+</div>
+<h5>Jeremiah S Kleiber jsk84@zips.uakron.edu</h5>
+
+
+<!--Calculator for factorials-->
+<div id = "calc">
+<p>Factorial Calculator</p>
+<button onclick="factorialSetUp()">Press to enter a value</button>
+<p id="outputFactorial"></p>
+</div>
+
+<!--displays rooster mouse cursor-->
+<div id = "roosters">
+<img id ="rooster"  border="0" src="rooster.jpg" width= "70px" height = "70px"  >
+</div>
+
+<!--explosion images-->
+<img id ="explosion1"  border="0" src="explosion.jpg" width= "100px" height = "100px" style="
+position:sticky; left: 0px;" >
+
+<img id ="explosion2"  border="0" src="explosion.jpg" width= "100px" height = "100px" style="
+position:sticky; left: 10000px;">
+
+
+</video>
+</body>
+</html>
+
+<style>
+body
+{
+	background-color: #E9967A;
+	text-align: left;
+}
+h5
+{
+	text-align: right;
+	color: green;
+}
+#dateTime
+{
+	text-align: right;
+	color: green;	
+}
+#calc
+{
+	font-family: Fantasy;
+	font-size: 30px;
+	text-align: center;
+	background-color: Tomato;
+}
+#roosters 
+{
+	position: absolute; 
+	left: 0px; 
+	top: 0px;
+}
+#vid
+{
+	position: sticky; 
+	left:500px; 
+	top: 300px;
+
+}
+</style>
+<script>
+
+//shows info about the browser
+document.getElementById("browser").innerHTML = navigator.appVersion;
+document.getElementById("browserName").innerHTML = navigator.appName;
+
+document.getElementById("browser").style.fontSize = "10px";
+document.getElementById("browserName").style.fontSize = "10px";
+
+//sets time
+var dt = new Date();
+document.getElementById("time").innerHTML = dt.toLocaleTimeString();
+document.getElementById("time").style.fontSize = "15px";
+
+//sets date
+var dt = new Date();
+document.getElementById("date").innerHTML = dt.toLocaleDateString();
+document.getElementById("date").style.fontSize = "15px";
+
+//sets up display for factorial input
+function factorialSetUp() //sets up recrusive factorial function
+{
+	var number = prompt("Please enter a non negative number ", 8);
+	number = factorial(number);
+	document.getElementById("outputFactorial").innerHTML = number;
+}
+
+//takes a number to find the factorial of and returns the factorial of that number
+function factorial(number) // solves for factorial number
+{
+	if( number < 0 )
+	{
+		alert("Entered a Negative value, returning 0");
+		return 0;
+	}
+	if( number == 0) //base case
+	{
+
+		return 1;
+	}
+	return factorial(number -1) * number;
+}
+
+//calls initText everytime a click is used on the webpage
+document.addEventListener("click", imageMoverSetUp);
+
+var pos, x, y, finalx = 0, finaly = 0;
+
+//takes current mouse position then inputs it into a final value and converts string into ints
+function imageMoverSetUp() 
+{
+	finalx = event.pageX - 25; 
+	finaly = event.pageY - 25;
+
+	pos = document.getElementById('roosters').style;
+
+	var x = pos.left;
+	var y = pos.top;
+
+	x = x.match(/\d+/);
+	y = y.match(/\d+/);
+
+	moveImage(x, y);
+} 
+
+//takes a position x and y and moves the image to a new position till it reaches final values
+function moveImage(x, y) 
+{
+	if (x != finalx) 
+	{
+        	if (x > finalx) 
+			x--;
+        	else if (x < finalx)
+			x++;
+	}
+	if (y != finaly)
+	{ 
+		if (y > finaly) 
+			y--;
+		else if (y < finaly) 
+			y++;
+	}
+	if ((x != finalx) || (y != finaly)) 
+	{ 
+        	pos.left = x + "px";
+        	pos.top = y + "px";
+        	setTimeout("moveImage(" + x + "," + y + ")", 1); //recursive call
+	} 
+}
+
+
+</script>
